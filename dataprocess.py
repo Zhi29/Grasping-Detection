@@ -6,16 +6,16 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-dataset = "/Users/zhili/Documents/test_dataset/" # this is the path of dataset
+#dataset = "/Users/zhili/Documents/test_dataset/" # this is the path of dataset
+dataset = "/home/yunchu/python_workspace/data_test/"
 
 NUM_LABELS = 10
-
 class MyDataset(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
         labels_txt = glob.glob(dataset + "*" + ".txt")
         labels_txt.sort()
         l_l = len(labels_txt)
-        image_list = glob.glob(dataset + "*" + ".png")
+        image_list = glob.glob(dataset + "*" + ".jpg")
         image_list.sort()
         l_img = len(image_list)
         self.label_files = labels_txt[int(l_l*start): int(l_l*end)]
@@ -54,6 +54,8 @@ class MyDataset(torch.utils.data.Dataset):
                 
                 boxes.append(box)
         return boxes[:NUM_LABELS]
+
+
         '''
 def test():
     traindata = MyDataset(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))

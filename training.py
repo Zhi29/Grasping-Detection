@@ -16,11 +16,11 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 mse = nn.MSELoss()
 
 #parameters
-DATA_SPLIT = 0.8 # the split of training and validation data
+DATA_SPLIT = 0.9 # the split of training and validation data
 EPOCH = 100
-BATCH_SIZE = 2
+BATCH_SIZE = 30
 lr = 0.005
-GPU = False
+GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
 train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
@@ -82,12 +82,9 @@ def training():
                 optimizer_ft.zero_grad()
 
                 with torch.set_grad_enabled(phase == 'train'):
-                    print(images.size())
-                    print(labels.size())
-                    pred = model(images) # pred should have the same dim with labels
-                    print(pred.size())
 
-                    
+                    pred = model(images) # pred should have the same dim with labels
+
                     loss = Loss_calculation(pred, labels)
 
                     if phase == 'train':
