@@ -6,7 +6,8 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-dataset = "/Users/zhili/Documents/test_dataset/" # this is the path of dataset
+dataset = "/home/yunchu/python_workspace/data_test/" # this is the path of dataset
+#dataset = "Users/zhili/Documents/test_dataset/"
 
 NUM_LABELS = 10
 
@@ -15,7 +16,7 @@ class MyDataset(torch.utils.data.Dataset):
         labels_txt = glob.glob(dataset + "*" + ".txt")
         labels_txt.sort()
         l_l = len(labels_txt)
-        image_list = glob.glob(dataset + "*" + ".png")
+        image_list = glob.glob(dataset + "*" + ".jpg")
         image_list.sort()
         l_img = len(image_list)
         self.label_files = labels_txt[int(l_l*start): int(l_l*end)]
