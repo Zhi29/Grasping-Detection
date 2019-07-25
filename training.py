@@ -22,9 +22,9 @@ writer = SummaryWriter(log_dir = 'log')
 
 #parameters
 DATA_SPLIT = 0.9 # the split of training and validation data
-EPOCH = 100
-BATCH_SIZE = 20
-lr = 0.001
+EPOCH = 200
+BATCH_SIZE = 30
+lr = 0.0001
 GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
@@ -74,8 +74,10 @@ def training():
             if phase == "train":
                 exp_lr_scheduler.step()
                 model.train() # Set model to training mode
+                model.dropout_rate = 0.2
             else:
                 model.eval() # Set model to evaluation mode
+                model.dropout_rate = 0
             
             running_loss = 0.0
             running_acc = 0
