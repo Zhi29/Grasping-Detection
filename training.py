@@ -12,6 +12,7 @@ from tensorboardX import SummaryWriter
 
 from dataprocess import *
 from grasping_evaluation import *
+from myModel import *
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 mse = nn.MSELoss()
@@ -45,9 +46,11 @@ def Loss_calculation(pred, label):
 
 def training():
     #temporarily use ResNet18 as our model
-    model = models.resnet18(pretrained = False)
-    num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
-    model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
+    #model = models.resnet18(pretrained = False)
+    #num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
+    #model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
+
+    model = myModel()
 
     if GPU: model = model.to(device)
     #model = sq.cuda()
@@ -100,7 +103,7 @@ def training():
                 running_loss += loss.item() * images.size(0)
                 running_acc += acc(pred, labels, images.size(0))
 
-                batch_loss = loss.item() * images.size(0)
+                batch_loss = loss.item()
                 batch_acc = acc(pred, labels, images.size(0))
                 print('{} Batch_Loss: {:.4f} Batch_Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
             
