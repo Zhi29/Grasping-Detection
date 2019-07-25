@@ -24,7 +24,7 @@ writer = SummaryWriter(log_dir = 'log')
 DATA_SPLIT = 0.9 # the split of training and validation data
 EPOCH = 200
 BATCH_SIZE = 25
-lr = 0.001
+lr = 0.0005
 GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
@@ -46,11 +46,11 @@ def Loss_calculation(pred, label):
 
 def training():
     #temporarily use ResNet18 as our model
-    model = models.resnet34(pretrained = False)
-    num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
-    model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
+    #model = models.resnet34(pretrained = False)
+    #num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
+    #model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
 
-    #model = myModel()
+    model = myModel()
 
     if GPU: model = model.to(device)
     #model = sq.cuda()
@@ -74,7 +74,7 @@ def training():
             if phase == "train":
                 exp_lr_scheduler.step()
                 model.train() # Set model to training mode
-                model.dropout_rate = 0.2
+                model.dropout_rate = 0.0
             else:
                 model.eval() # Set model to evaluation mode
                 model.dropout_rate = 0
