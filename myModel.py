@@ -2,7 +2,7 @@ import torch.nn as nn
 from dataprocess import *
 
 
-dropout_rate = 0.8 if phase == 'train' else 1.0
+dropout_rate = 0.8
 class myModel(nn.Module):
     def __init__(self):
         super(myModel, self).__init__()

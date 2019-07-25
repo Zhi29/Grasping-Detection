@@ -23,8 +23,8 @@ writer = SummaryWriter(log_dir = 'log')
 #parameters
 DATA_SPLIT = 0.9 # the split of training and validation data
 EPOCH = 100
-BATCH_SIZE = 30
-lr = 0.005
+BATCH_SIZE = 20
+lr = 0.001
 GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
@@ -67,7 +67,7 @@ def training():
 
     for epoch in range(EPOCH):
         print('Epoch {}/{}'.format(epoch, EPOCH - 1))
-        print('-'*10)
+        print('-'*20)
 
         #Each epoch has a training and validation phase
         for phase in ['train', 'val']:
