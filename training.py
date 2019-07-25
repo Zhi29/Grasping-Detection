@@ -50,6 +50,7 @@ def training():
     model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
 
     if GPU: model = model.to(device)
+    #model = sq.cuda()
 
     optimizer_ft = optim.Adam(model.parameters(), lr = lr)
 
