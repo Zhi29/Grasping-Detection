@@ -9,7 +9,7 @@ from PIL import Image
 dataset = "/home/yunchu/python_workspace/test200/" # this is the path of dataset
 #dataset = "Users/zhili/Documents/test_dataset/"
 
-NUM_LABELS = 10
+NUM_LABELS = 1
 
 class MyDataset(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
