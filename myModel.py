@@ -2,7 +2,7 @@ import torch.nn as nn
 from dataprocess import *
 
 
-dropout_rate = 0.8
+dropout_rate = 0.2
 class myModel(nn.Module):
     def __init__(self):
         super(myModel, self).__init__()
@@ -18,6 +18,8 @@ class myModel(nn.Module):
         self.dropout = nn.Dropout(p = dropout_rate)
         self.fc2 = nn.Linear(512, 512)
         self.out = nn.Linear(512, NUM_LABELS*5)
+
+        self.dropout_rate = dropout_rate
     
     def forward(self, x):
         x = self.Conv1(x)
