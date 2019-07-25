@@ -8,6 +8,7 @@ from torchvision import models
 import numpy as np
 import time
 import copy
+from tensorboardX import SummaryWriter
 
 from dataprocess import *
 from grasping_evaluation import *
@@ -15,10 +16,13 @@ from grasping_evaluation import *
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 mse = nn.MSELoss()
 
+#writer
+writer = SummaryWriter(log_dir = 'log')
+
 #parameters
 DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 100
-BATCH_SIZE = 2
+BATCH_SIZE = 10
 lr = 0.005
 GPU = False
 
@@ -82,11 +86,8 @@ def training():
                 optimizer_ft.zero_grad()
 
                 with torch.set_grad_enabled(phase == 'train'):
-                    print(images.size())
-                    print(labels.size())
+        
                     pred = model(images) # pred should have the same dim with labels
-                    print(pred.size())
-
                     
                     loss = Loss_calculation(pred, labels)
 
@@ -107,6 +108,11 @@ def training():
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
+            if phase == 'train':
+                writer.add_scalars('log/train', {'train_loss':epoch_loss, 'train_acc':epoch_acc}, epoch)
+            else:
+                writer.add_scalars('log/validation', {'validation_loss': epoch_loss, 'validation_acc': epoch_acc}, epoch)
+
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
@@ -117,6 +123,8 @@ def training():
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     print('Best val Acc: {:4f}'.format(best_acc))
+
+    writer.close()
 
 if __name__ == '__main__':
     training()
