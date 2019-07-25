@@ -14,6 +14,7 @@ class myModel(nn.Module):
         self.Conv6 = nn.Sequential(nn.Conv2d(in_channels = 256, out_channels = 256, kernel_size = 3, stride = 1), nn.ReLU(), nn.MaxPool2d(kernel_size = 2)) #9
 
         self.fc1 = nn.Linear(8*8*256, 512)
+        self.activate = nn.ReLU()
         self.dropout = nn.Dropout(p = dropout_rate)
         self.fc2 = nn.Linear(512, 512)
         self.out = nn.Linear(512, NUM_LABELS*5)
@@ -27,9 +28,9 @@ class myModel(nn.Module):
         x = self.Conv6(x)
 
         x = x.view(x.size(0), -1)
-        x = nn.ReLU(self.fc1(x))
+        x = self.activate(self.fc1(x))
         x = self.dropout(x)
-        x = nn.ReLU(self.fc2(x))
+        x = self.activate(self.fc2(x))
         x = self.dropout(x)
         output = self.out(x)
 
