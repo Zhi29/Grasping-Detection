@@ -27,8 +27,10 @@ class myModel(nn.Module):
         x = self.Conv6(x)
 
         x = x.view(x.size(0), -1)
-        x = self.dropout(nn.ReLU(self.fc1(x)))
-        x = self.dropout(nn.ReLU(self.fc2(x)))
+        x = nn.ReLU(self.fc1(x))
+        x = self.dropout(x)
+        x = nn.ReLU(self.fc2(x))
+        x = self.dropout(x)
         output = self.out(x)
 
         return output
