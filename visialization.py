@@ -10,12 +10,12 @@ def process_label_files(label_path):
         for line in f:
             line = line.rstrip()
             a = line.split(';')
-            if float(a[2]) < 0:
+            #if float(a[2]) < 0:
                 # x y w h theta
-                box = [float(a[0]), float(a[1]), float(a[4]), float(a[3]), float(a[2])]
-            else:
+                #box = [float(a[0]), float(a[1]), float(a[4]), float(a[3]), float(a[2])]
+            #else:
                 # x y h w theta
-                box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), float(a[2])]
+            box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), float(a[2])]
             
             boxes.append(box)
     return boxes[:NUM_LABELS]
@@ -30,17 +30,17 @@ def visulization():
         img = imgs[i]
         label = labels[i]
 
-        img = cv2.imread("{}.png".format(img))
+        img = cv2.imread(img)
         cv2.namedWindow("Image" + str(i))
 
         boxes = process_label_files(label)
 
         for box in boxes:
             bbox_contour = grasp_to_bbox(box)
-            print(bbox_contour)
-            cv2.drawContours(img, bbox_contour, 0, (0, 255, 0), 1)
+            print(bbox_contour.shape)
+            cv2.drawContours(img, [bbox_contour.astype(int)], -1, (0, 255, 0), 1)
 
-        cv2.imshow('Image', img)
-        cv2.waitKey(0)
+        cv2.imwrite("test_bbox" + "{}.png".format(i), img)
+        break
 
 visulization()
