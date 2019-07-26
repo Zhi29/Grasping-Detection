@@ -35,10 +35,10 @@ val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers=4)
 '''
 
-train_data = MyDataset_Cornell(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean, std)]))
+train_data = MyDataset_Cornell(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.ToTensor()]))
 train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size = BATCH_SIZE, shuffle = True, num_workers = 4)
 
-val_data = MyDataset_Cornell(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean, std)]))
+val_data = MyDataset_Cornell(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.ToTensor()]))
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers = 4)
 
 def Loss_calculation(pred, label):
