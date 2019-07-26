@@ -16,7 +16,7 @@ class MyDataset(torch.utils.data.Dataset):
         labels_txt = glob.glob(dataset + "*" + ".txt")
         labels_txt.sort()
         l_l = len(labels_txt)
-        image_list = glob.glob(dataset + "*" + ".jpg")
+        image_list = glob.glob(dataset + "*" + ".png")
         image_list.sort()
         l_img = len(image_list)
         self.label_files = labels_txt[int(l_l*start): int(l_l*end)]
