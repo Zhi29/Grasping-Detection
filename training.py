@@ -23,8 +23,8 @@ writer = SummaryWriter(log_dir = 'log')
 #parameters
 DATA_SPLIT = 0.9 # the split of training and validation data
 EPOCH = 200
-BATCH_SIZE = 10
-lr = 0.0001
+BATCH_SIZE = 20
+lr = 0.00005
 GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize(mean, std)]))
