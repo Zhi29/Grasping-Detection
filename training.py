@@ -29,10 +29,10 @@ GPU = True
 
 DATA_SET = "Jacquard"
 
-train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.ToTensor()]))
+train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
 #train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 
-val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.ToTensor()]))
+val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
 #val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers=4)
 
 
@@ -70,7 +70,7 @@ def training():
     if GPU: model = model.to(device)
     #model = sq.cuda()
 
-    optimizer_ft = optim.Adam(model.parameters(), lr = lr)
+    optimizer_ft = optim.SGD(model.parameters(), lr = lr, momentum = 0.9)
 
     #Decay LR by a factor of 0.9 every 20 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.9)

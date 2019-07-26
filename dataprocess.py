@@ -100,10 +100,11 @@ class MyDataset_Cornell(torch.utils.data.Dataset):
     
 '''
 def test():
-    traindata = MyDataset(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.ToTensor()]))
+    traindata = MyDataset(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
     trainloader = torch.utils.data.DataLoader(dataset = traindata, batch_size=2, shuffle=False)
     for i, data in enumerate(trainloader):
         imags, label = data
+        cv2.imwrite("test_bbox" + "{}.png".format(i), imag)
         print(label.size())
         print(imags.size())
 test()
