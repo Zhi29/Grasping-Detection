@@ -27,10 +27,10 @@ BATCH_SIZE = 20
 lr = 0.0005
 GPU = True
 
-train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
+train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize()]))
 train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 
-val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
+val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize()]))
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers=4)
 
 def Loss_calculation(pred, label):
