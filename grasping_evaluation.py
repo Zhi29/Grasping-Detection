@@ -57,7 +57,7 @@ def acc(pred, label, num_imgs):
             if iou_per_image[k][0] >= 0.25 and iou_per_image[k][1] <= 30.0:
                 count += 1
         
-        accuracy += count/num_imgs
+        accuracy += count/label.size(1)
 
         #renew lists and var
         iou_per_image = []

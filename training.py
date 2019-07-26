@@ -36,7 +36,10 @@ val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_
 def Loss_calculation(pred, label):
     # the dimension of pred is tensor [batch_size, dim_output]
     # the dimension of label is tensor [batch, num_labels_per_image, 5]
+    print("ground truth: ", label)
+    print("prediction: ", pred)
     label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
+    print("ground Truth after: ", label)
     label = label.to(torch.float)
 
     pred = pred.to(torch.float)
