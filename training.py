@@ -46,11 +46,11 @@ def Loss_calculation(pred, label):
 
 def training():
     #temporarily use ResNet18 as our model
-    #model = models.resnet34(pretrained = False)
-    #num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
-    #model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
+    model = models.resnet50(pretrained = False)
+    num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
+    model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
 
-    model = myModel()
+    #model = myModel()
 
     if GPU: model = model.to(device)
     #model = sq.cuda()
