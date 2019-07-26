@@ -39,7 +39,6 @@ def Loss_calculation(pred, label):
     print("ground truth: ", label)
     print("prediction: ", pred)
     label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
-    print("ground Truth after: ", label)
     label = label.to(torch.float)
 
     pred = pred.to(torch.float)
