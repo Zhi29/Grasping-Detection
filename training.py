@@ -27,16 +27,27 @@ BATCH_SIZE = 1
 lr = 0.0001
 GPU = True
 
+'''
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize(mean, std)]))
 train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 
 val_data = MyDataset(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize(mean, std)]))
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers=4)
+'''
+
+train_data = MyDataset_Cornell(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean, std)]))
+train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size = BATCH_SIZE, shuffle = True, num_workers = 4)
+
+val_data = MyDataset_Cornell(dataset = dataset, start = DATA_SPLIT, end = 1.0, transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean, std)]))
+val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_SIZE, shuffle = True, num_workers = 4)
 
 def Loss_calculation(pred, label):
     # the dimension of pred is tensor [batch_size, dim_output]
     # the dimension of label is tensor [batch, num_labels_per_image, 5]
-    label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
+    #Jacquard
+    #label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
+
+    label = torch.reshape(label, (pred.size(0), 24))
     label = label.to(torch.float)
 
     pred = pred.to(torch.float)
@@ -49,7 +60,8 @@ def training():
     model = models.resnet50(pretrained = True)
     num_ftrs = model.fc.in_features # the input dimension of fc of resnet18
     #model.fc = nn.Linear(num_ftrs, 5 * NUM_LABELS) # the output dim should be 5 corresponding to x, y, w, h, theta
-    model.fc = nn.Sequential(nn.Linear(num_ftrs, 512), nn.Linear(512, 200), nn.Linear(200, 5*NUM_LABELS))
+    #model.fc = nn.Sequential(nn.Linear(num_ftrs, 512), nn.Linear(512, 200), nn.Linear(200, 5*NUM_LABELS)) #Jacquard
+    model.fc = nn.Sequential(nn.Linear(num_ftrs, 512), nn.Linear(512, 200), nn.Linear(200, 24)) #Cornell
 
     #model = myModel()
 
@@ -104,10 +116,10 @@ def training():
                     
                 #statistics
                 running_loss += loss.item() * images.size(0)
-                running_acc += acc(pred, labels, images.size(0))
+                running_acc += acc_cornell(pred, labels, images.size(0))
 
                 batch_loss = loss.item()
-                batch_acc = acc(pred, labels, images.size(0))
+                batch_acc = acc_cornell(pred, labels, images.size(0))
                 #print('{} Batch_Loss: {:.4f} Batch_Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
             
             epoch_loss = running_loss / train_data.__len__()

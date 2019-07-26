@@ -6,12 +6,13 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
+#dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
+dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/datah/"
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
 NUM_LABELS = 10
-mean = (0,0,0)
-std = (1,1,1)
+mean = [0.485, 0.456, 0.406],
+std = [0.229, 0.224, 0.225]
 
 class MyDataset(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
@@ -57,6 +58,46 @@ class MyDataset(torch.utils.data.Dataset):
                 
                 boxes.append(box)
         return boxes[:NUM_LABELS]
+
+class MyDataset_Cornell(torch.utils.data.Dataset):
+    def __init__(self, dataset, transform = None, start = 0, end = 1.0):
+        labels_txt = glob.glob(dataset + "*" + ".txt")
+        labels_txt.sort()
+        l_l = len(labels_txt)
+        image_list = glob.glob(dataset + "*" + ".png")
+        image_list.sort()
+        l_img = len(image_list)
+        self.label_files = labels_txt[int(l_l*start): int(l_l*end)]
+        self.image_files = image_list[int(l_img*start): int(l_img*end)]
+        self.transform = transform
+
+
+    def __getitem__(self, index):
+        # open image according to given index
+        image_path = self.image_files[index]
+        image = Image.open(image_path).convert('RGB')
+
+        #return label 
+        label = self.box2label(self.label_files[index])
+        label = torch.tensor(label)
+        if self.transform: image = self.transform(image)
+        return image, label
+
+    
+    def __len__(self):
+        return len(self.image_files)   
+
+    def box2label(self,labels_txt):
+        a = np.loadtxt(labels_txt)
+        boxes = []
+        box = []
+        for i in range(a.shape[0]):
+            if i % 4 == 0:
+                box = [a[i], a[i + 1], a[i + 2], a[i + 3]]
+                box = np.int0(box)
+                boxes.append(box)
+        return boxes
+    
         '''
 def test():
     traindata = MyDataset(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
