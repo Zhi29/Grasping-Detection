@@ -21,9 +21,9 @@ mse = nn.MSELoss()
 writer = SummaryWriter(log_dir = 'log')
 
 #parameters
-DATA_SPLIT = 0.9 # the split of training and validation data
+DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 200
-BATCH_SIZE = 8
+BATCH_SIZE = 1
 lr = 0.001
 GPU = True
 

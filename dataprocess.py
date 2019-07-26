@@ -6,7 +6,7 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-dataset = "/home/yunchu/python_workspace/test200/" # this is the path of dataset
+dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
 NUM_LABELS = 4
