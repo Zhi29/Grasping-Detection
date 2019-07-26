@@ -18,12 +18,9 @@ def calculate_IOU(box_model, box_label, theta_model, theta_label):
     p2 = Polygon(box_label).convex_hull
     iou = p1.intersection(p2).area / (p1.area + p2.area - p1.intersection(p2).area)
 
-    theta_model %= 360
-    theta_label %= 360
+    theta_model %= 2*np.pi
+    if theta_model > np.pi: theta_model -= 2*np.pi
 
-    if theta_model > 180: theta_model -= 360
-    if theta_model > 180: theta_label -= 360
-        
     angle_diff = np.abs(theta_model * 180 / np.pi - theta_label * 180 / np.pi)
 
     return iou, angle_diff
