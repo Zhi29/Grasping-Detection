@@ -24,7 +24,7 @@ writer = SummaryWriter(log_dir = 'log')
 DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 400
 BATCH_SIZE = 1
-lr = 0.001
+lr = 0.0001
 GPU = True
 
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize(mean, std)]))
@@ -59,7 +59,7 @@ def training():
     optimizer_ft = optim.Adam(model.parameters(), lr = lr)
 
     #Decay LR by a factor of 0.9 every 20 epochs
-    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.8)
+    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.9)
 
     since = time.time()
 
