@@ -104,7 +104,6 @@ def test():
     trainloader = torch.utils.data.DataLoader(dataset = traindata, batch_size=2, shuffle=False)
     for i, data in enumerate(trainloader):
         imags, label = data
-        cv2.imwrite("test_bbox" + "{}.png".format(i), imag)
         print(label.size())
         print(imags.size())
 test()
