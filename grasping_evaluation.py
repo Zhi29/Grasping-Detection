@@ -49,10 +49,8 @@ def acc(pred, label, num_imgs):
                         pred[i,j,4].detach().cpu().numpy())
                 pred_bbox = cv2.boxPoints(pred_bbox)
             for k in range(label.size(1)):
-
                 #pred_bbox = grasp_to_bbox(pred[i,j,:].detach().cpu().numpy())
                 #label_bbox = grasp_to_bbox(label[i,j,:].detach().cpu().numpy())
-
                 label_bbox = ((label[i,k,0].detach().cpu().numpy(), label[i,k,1].detach().cpu().numpy()), \
                         (label[i,k,2].detach().cpu().numpy(),label[i,k,3].detach().cpu().numpy()),\
                         label[i,k,4].detach().cpu().numpy())
