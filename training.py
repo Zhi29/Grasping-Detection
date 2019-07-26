@@ -24,7 +24,7 @@ writer = SummaryWriter(log_dir = 'log')
 DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 400
 BATCH_SIZE = 1
-lr = 0.0001
+lr = 0.001
 GPU = True
 
 '''
