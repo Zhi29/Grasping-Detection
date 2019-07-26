@@ -17,6 +17,7 @@ class myModel(nn.Module):
         self.activate = nn.ReLU()
         self.dropout = nn.Dropout(p = dropout_rate)
         self.fc2 = nn.Linear(512, 512)
+        self.fc3 = nn.Linear(512, 512)
         self.out = nn.Linear(512, NUM_LABELS*5)
 
         self.dropout_rate = dropout_rate
@@ -32,6 +33,7 @@ class myModel(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.activate(self.fc1(x))
         x = self.activate(self.fc2(x))
+        x = self.activate(self.fc3(x))
         output = self.out(x)
 
         return output
