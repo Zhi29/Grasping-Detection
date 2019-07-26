@@ -22,7 +22,7 @@ writer = SummaryWriter(log_dir = 'log')
 
 #parameters
 DATA_SPLIT = 0.8 # the split of training and validation data
-EPOCH = 200
+EPOCH = 400
 BATCH_SIZE = 1
 lr = 0.001
 GPU = True
@@ -36,8 +36,6 @@ val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size = BATCH_
 def Loss_calculation(pred, label):
     # the dimension of pred is tensor [batch_size, dim_output]
     # the dimension of label is tensor [batch, num_labels_per_image, 5]
-    print("ground truth: ", label)
-    print("prediction: ", pred)
     label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
     label = label.to(torch.float)
 
@@ -60,7 +58,7 @@ def training():
     optimizer_ft = optim.Adam(model.parameters(), lr = lr)
 
     #Decay LR by a factor of 0.9 every 20 epochs
-    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.9)
+    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.8)
 
     since = time.time()
 
