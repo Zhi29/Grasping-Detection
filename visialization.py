@@ -37,6 +37,7 @@ def visulization():
 
         for box in boxes:
             bbox_contour = grasp_to_bbox(box)
+            print(bbox_contour)
             cv2.drawContours(img, [bbox_contour], 0, (0, 0, 255), 1)
 
         cv2.imshow('Image', img)
