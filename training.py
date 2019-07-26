@@ -70,7 +70,7 @@ def training():
     if GPU: model = model.to(device)
     #model = sq.cuda()
 
-    optimizer_ft = optim.SGD(model.parameters(), lr = lr, momentum = 0.9)
+    optimizer_ft = optim.Adam(model.parameters(), lr = lr)
 
     #Decay LR by a factor of 0.9 every 20 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.9)
