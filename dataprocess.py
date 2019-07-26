@@ -13,6 +13,7 @@ dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
 NUM_LABELS = 10
 mean = [0.485, 0.456, 0.406],
 std = [0.229, 0.224, 0.225]
+ratio = 640/1024.0
 
 class MyDataset(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
@@ -52,9 +53,11 @@ class MyDataset(torch.utils.data.Dataset):
                 if float(a[2]) < 0:
                     # x y w h theta
                     box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), 360.0 + float(a[2])]
+                    box[:4] *= ratio
                 else:
                     # x y h w theta
                     box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), float(a[2])]
+                    box[:4] *= ratio
                 
                 boxes.append(box)
         return boxes[:NUM_LABELS]
