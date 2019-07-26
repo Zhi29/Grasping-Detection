@@ -38,8 +38,7 @@ def visulization():
         for box in boxes:
             bbox_contour = grasp_to_bbox(box)
             print(bbox_contour)
-            bbox_contour = bbox_contour.tolist()
-            cv2.drawContours(img, [bbox_contour], 0, (0, 255, 0), 1)
+            cv2.drawContours(img, bbox_contour, 0, (0, 255, 0), 1)
 
         cv2.imshow('Image', img)
         cv2.waitKey(0)
