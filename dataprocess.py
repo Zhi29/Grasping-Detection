@@ -6,8 +6,8 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-#dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
-dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/test10cornell/"
+dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
+#dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/test10cornell/"
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
 NUM_LABELS = 10
@@ -98,13 +98,12 @@ class MyDataset_Cornell(torch.utils.data.Dataset):
                 boxes.append(box)
         return boxes
     
-'''
+
 def test():
-    traindata = MyDataset_Cornell(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.ToTensor()]))
+    traindata = MyDataset(dataset = dataset, start = 0, end = 0.8, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor()]))
     trainloader = torch.utils.data.DataLoader(dataset = traindata, batch_size=2, shuffle=False)
     for i, data in enumerate(trainloader):
         imags, label = data
         print(label.size())
         print(imags.size())
 test()
-'''
