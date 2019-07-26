@@ -104,6 +104,6 @@ def test():
     trainloader = torch.utils.data.DataLoader(dataset = traindata, batch_size=2, shuffle=False)
     for i, data in enumerate(trainloader):
         imags, label = data
-        print(label.size)
-        print(imags.size)
+        print(label.size())
+        print(imags.size())
 test()
