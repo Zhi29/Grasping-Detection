@@ -31,7 +31,7 @@ def visulization():
         label = labels[i]
 
         img = cv2.imread("{}.png".format(img))
-        cv2.nameWindow("Image" + str(i))
+        cv2.namedWindow("Image" + str(i))
 
         boxes = process_label_files(dataset + label)
 
