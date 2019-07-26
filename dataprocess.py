@@ -50,7 +50,7 @@ class MyDataset(torch.utils.data.Dataset):
                 a = line.split(';')
                 if float(a[2]) < 0:
                     # x y w h theta
-                    box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), float(360.0 + a[2])]
+                    box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), 360.0 + float(a[2])]
                 else:
                     # x y h w theta
                     box = [float(a[0]), float(a[1]), float(a[3]), float(a[4]), float(a[2])]
