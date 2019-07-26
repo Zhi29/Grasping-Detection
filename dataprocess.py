@@ -9,7 +9,7 @@ from PIL import Image
 dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
-NUM_LABELS = 1
+NUM_LABELS = 10
 mean = (0,0,0)
 std = (1,1,1)
 
