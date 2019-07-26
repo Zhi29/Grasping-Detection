@@ -36,8 +36,10 @@ def visulization():
         boxes = process_label_files(label)
 
         for box in boxes:
-            bbox_contour = grasp_to_bbox(box)
-            print(bbox_contour.shape)
+            #bbox_contour = grasp_to_bbox(box)
+            #box = ((box[0], box[1]), (box[2], box[3]), box[4])
+            bbox_contour = cv2.boxPoints(box)
+            #print(bbox_contour.shape)
             cv2.drawContours(img, [bbox_contour.astype(int)], -1, (0, 255, 0), 1)
 
         cv2.imwrite("test_bbox" + "{}.png".format(i), img)

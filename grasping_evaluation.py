@@ -1,5 +1,6 @@
 from shapely.geometry import Polygon
 import torch
+import cv2
 
 from dataprocess import *
 
@@ -34,8 +35,18 @@ def acc(pred, label, num_imgs):
 
     for i in range(num_imgs):
         for j in range(label.size(1)):
-            pred_bbox = grasp_to_bbox(pred[i,j,:].detach().cpu().numpy())
-            label_bbox = grasp_to_bbox(label[i,j,:].detach().cpu().numpy())
+            pred_bbox = ((pred[i,j,0].detach().cpu().numpy(), pred[i,j,1].detach().cpu().numpy()), \
+                (pred[i,j,2].detach().cpu().numpy(),pred[i,j,3].detach().cpu().numpy()),\
+                    pred[i,j,4].detach().cpu().numpy())
+            pred_bbox = cv2.boxPoints(pred_bbox)
+            #pred_bbox = grasp_to_bbox(pred[i,j,:].detach().cpu().numpy())
+            #label_bbox = grasp_to_bbox(label[i,j,:].detach().cpu().numpy())
+
+            label_bbox = ((label[i,j,0].detach().cpu().numpy(), label[i,j,1].detach().cpu().numpy()), \
+                (label[i,j,2].detach().cpu().numpy(),label[i,j,3].detach().cpu().numpy()),\
+                    label[i,j,4].detach().cpu().numpy())
+            label_bbox = cv2.boxPoints(label_bbox)
+
             iou, angle_diff = calculate_IOU(pred_bbox, label_bbox, pred[i,j,-1].detach().cpu().numpy(), label[i,j,-1].detach().cpu().numpy())
             iou_per_image.append([iou, angle_diff])
         
