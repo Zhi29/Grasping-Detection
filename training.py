@@ -27,6 +27,7 @@ BATCH_SIZE = 1
 lr = 0.0001
 GPU = True
 
+DATA_SET = "Cornell"
 '''
 train_data = MyDataset(dataset = dataset, start = 0, end = DATA_SPLIT, transform = transforms.Compose([transforms.Resize(640), transforms.ToTensor(), transforms.Normalize(mean, std)]))
 train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
@@ -45,9 +46,10 @@ def Loss_calculation(pred, label):
     # the dimension of pred is tensor [batch_size, dim_output]
     # the dimension of label is tensor [batch, num_labels_per_image, 5]
     #Jacquard
-    #label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
-
-    label = torch.reshape(label, (pred.size(0), 24))
+    if DATA_SET == "Jacquard":
+        label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
+    else:
+        label = torch.reshape(label, (pred.size(0), 24))
     label = label.to(torch.float)
 
     pred = pred.to(torch.float)
@@ -116,10 +118,15 @@ def training():
                     
                 #statistics
                 running_loss += loss.item() * images.size(0)
-                running_acc += acc_cornell(pred, labels, images.size(0))
+                if DATA_SET == "Jacquard":
+                    running_acc += acc(pred, labels, images.size(0))
+                    batch_loss = loss.item()
+                    batch_acc = acc(pred, labels, images.size(0))
+                else:
+                    running_acc += acc_cornell(pred, labels, images.size(0))
+                    batch_loss = loss.item()
+                    batch_acc = acc_cornell(pred, labels, images.size(0))
 
-                batch_loss = loss.item()
-                batch_acc = acc_cornell(pred, labels, images.size(0))
                 #print('{} Batch_Loss: {:.4f} Batch_Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
             
             epoch_loss = running_loss / train_data.__len__()
