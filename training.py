@@ -107,7 +107,7 @@ def training():
 
                 batch_loss = loss.item()
                 batch_acc = acc(pred, labels, images.size(0))
-                print('{} Batch_Loss: {:.4f} Batch_Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
+                #print('{} Batch_Loss: {:.4f} Batch_Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
             
             epoch_loss = running_loss / train_data.__len__()
             epoch_acc = running_acc / train_data.__len__()
