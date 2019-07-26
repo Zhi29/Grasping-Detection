@@ -33,7 +33,7 @@ def visulization():
         img = cv2.imread("{}.png".format(img))
         cv2.namedWindow("Image" + str(i))
 
-        boxes = process_label_files(dataset + label)
+        boxes = process_label_files(label)
 
         for box in boxes:
             bbox_contour = grasp_to_bbox(box)
