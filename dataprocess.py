@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import torch.utils.data as Dataset
 import torchvision.transforms as transforms
+import cv2
 
 from PIL import Image
 dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
@@ -50,6 +51,7 @@ class MyDataset(torch.utils.data.Dataset):
             for line in f:
                 line = line.rstrip()
                 a = line.split(';')
+                '''
                 if float(a[2]) < 0:
                     # x y w h theta
                     box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), 360.0 + float(a[2])]
@@ -57,9 +59,13 @@ class MyDataset(torch.utils.data.Dataset):
                 else:
                     # x y h w theta
                     box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
-
+                '''
+                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
+                box = ((box[0]*ratio, box[1]*ratio), (box[2]*ratio, box[3]*ratio), box[4])
+                bbox_contour = cv2.boxPoints(box)
+                bbox_contour.reshape((1,8))
                 
-                boxes.append(box)
+                boxes.append(bbox_contour)
         return boxes[:NUM_LABELS]
 
 class MyDataset_Cornell(torch.utils.data.Dataset):

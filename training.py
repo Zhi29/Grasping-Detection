@@ -47,7 +47,7 @@ def Loss_calculation(pred, label):
     # the dimension of label is tensor [batch, num_labels_per_image, 5]
     #Jacquard
     if DATA_SET == "Jacquard":
-        label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5))
+        label = torch.reshape(label, (pred.size(0), NUM_LABELS * 8))
     else:
         label = torch.reshape(label, (pred.size(0), 24))
     label = label.to(torch.float)
@@ -119,9 +119,9 @@ def training():
                 #statistics
                 running_loss += loss.item() * images.size(0)
                 if DATA_SET == "Jacquard":
-                    running_acc += acc(pred, labels, images.size(0))
+                    running_acc += acc_cornell(pred, labels, images.size(0))
                     batch_loss = loss.item()
-                    batch_acc = acc(pred, labels, images.size(0))
+                    batch_acc = acc_cornell(pred, labels, images.size(0))
                 else:
                     running_acc += acc_cornell(pred, labels, images.size(0))
                     batch_loss = loss.item()
