@@ -15,6 +15,7 @@ from grasping_evaluation import *
 from myModel import *
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print(device)
 mse = nn.MSELoss()
 
 #writer
@@ -23,8 +24,8 @@ writer = SummaryWriter(log_dir = 'log')
 #parameters
 DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 400
-BATCH_SIZE = 10
-lr = 0.0001
+BATCH_SIZE = 1
+lr = 0.0005
 GPU = True
 
 DATA_SET = "Jacquard"

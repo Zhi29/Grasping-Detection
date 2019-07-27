@@ -17,7 +17,7 @@ std = [0.229, 0.224, 0.225]
 ratio = 640/1024.0
 
 class MyDataset(torch.utils.data.Dataset):
-    def __init__(self, dataset, transform = None, start = 0, end = 1.0):
+    def __init__(self, dataset, transform = None, start, end):
         labels_txt = glob.glob(dataset + "*" + ".txt")
         labels_txt.sort()
         l_l = len(labels_txt)
@@ -66,7 +66,8 @@ class MyDataset(torch.utils.data.Dataset):
                 bbox_contour.reshape((1,8))
                 
                 boxes.append(bbox_contour)
-        return boxes[:NUM_LABELS]
+        return boxes
+        #return boxes[:NUM_LABELS]
 
 class MyDataset_Cornell(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
