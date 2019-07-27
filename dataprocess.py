@@ -6,9 +6,9 @@ import torch.utils.data as Dataset
 import torchvision.transforms as transforms
 
 from PIL import Image
-dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
+#dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
 #dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/test10cornell/"
-#dataset = "/Users/zhili/Documents/test_dataset/"
+dataset = "/Users/zhili/Documents/test_dataset/"
 
 NUM_LABELS = 10
 mean = [0.485, 0.456, 0.406],
@@ -109,4 +109,4 @@ def test():
         imags, label = data
         print(label.size())
         print(imags.size())
-test()
+#test()
