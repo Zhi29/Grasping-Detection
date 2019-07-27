@@ -17,7 +17,7 @@ std = [0.229, 0.224, 0.225]
 ratio = 640/1024.0
 
 class MyDataset(torch.utils.data.Dataset):
-    def __init__(self, dataset, transform = None, start, end):
+    def __init__(self, dataset, start, end, transform = None):
         labels_txt = glob.glob(dataset + "*" + ".txt")
         labels_txt.sort()
         l_l = len(labels_txt)
