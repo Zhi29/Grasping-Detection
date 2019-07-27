@@ -11,7 +11,7 @@ dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
 #dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/test10cornell/"
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
-NUM_LABELS = 10
+NUM_LABELS = 4
 mean = [0.485, 0.456, 0.406],
 std = [0.229, 0.224, 0.225]
 ratio = 640/1024.0
