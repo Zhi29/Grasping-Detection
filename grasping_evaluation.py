@@ -82,10 +82,10 @@ def acc_cornell(pred, label, num_imgs):
             for k in range(label.size(1)):
                 iou = calculate_IOU_cornell(pred[i,j,:,:].detach().cpu().numpy(), label[i,k,:,:].detach().cpu().numpy())
                 iou_per_image.append(iou)
-            iou_max.append(max(iou_per_image))
-            iou_per_image = []
-        count = len([l for l in iou_max if l >= 0.25])
-        accuracy += count/(label.size(1))
+            #iou_max.append(max(iou_per_image))
+        count = len([l for l in iou_per_image if l >= 0.25])
+        iou_per_image = []
+        accuracy += count/(label.size(1)**2)
     return accuracy
 
 
