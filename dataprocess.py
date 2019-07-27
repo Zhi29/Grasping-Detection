@@ -66,8 +66,7 @@ class MyDataset(torch.utils.data.Dataset):
                 bbox_contour.reshape((1,8))
                 
                 boxes.append(bbox_contour)
-        return boxes
-        #return boxes[:NUM_LABELS]
+        return boxes[:NUM_LABELS]
 
 class MyDataset_Cornell(torch.utils.data.Dataset):
     def __init__(self, dataset, transform = None, start = 0, end = 1.0):
