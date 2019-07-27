@@ -84,7 +84,7 @@ def acc_cornell(pred, label, num_imgs):
                 iou_per_image.append(iou)
             iou_max.append(max(iou_per_image))
         count = len([l for l in iou_max if l >= 0.25])
-        accuracy += count/label.size(1)
+        accuracy += count/(label.size(1)**2)
     return accuracy
 
 
