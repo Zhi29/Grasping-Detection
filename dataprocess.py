@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 import cv2
 
 from PIL import Image
-dataset = "/home/yunchu/python_workspace/test10/" # this is the path of dataset
+dataset = "/home/yunchu/python_workspace/test200/" # this is the path of dataset
 #dataset = "/home/yunchu/Workspace/Deep_CNN_with_VAE_for_graspe/test10cornell/"
 #dataset = "/Users/zhili/Documents/test_dataset/"
 
