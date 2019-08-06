@@ -67,7 +67,7 @@ def Loss_cal(pred, label):
 
     loss = 0
     for i in range(0, NUM_LABELS * 5, 5):
-        loss += mse(pred, label(i:i+5))
+        loss += mse(pred, label[i:i+5])
     return loss/NUM_LABELS
 
     
