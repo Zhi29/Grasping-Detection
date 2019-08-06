@@ -24,7 +24,7 @@ writer = SummaryWriter(log_dir = 'log')
 DATA_SPLIT = 0.8 # the split of training and validation data
 EPOCH = 400
 BATCH_SIZE = 1
-lr = 0.00001
+lr = 0.0005
 GPU = True
 
 DATA_SET = "Jacquard"
@@ -88,9 +88,9 @@ def training():
     if GPU: model = model.to(device)
     #model = sq.cuda()
 
-    #optimizer_ft = optim.Adam(model.parameters(), lr = lr)
+    optimizer_ft = optim.Adam(model.parameters(), lr = lr)
 
-    optimizer_ft = optim.SGD(model.parameters(), lr=lr, momentum=0.9)
+    #optimizer_ft = optim.SGD(model.parameters(), lr=lr, momentum=0.9)
 
     #Decay LR by a factor of 0.9 every 20 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size = 20, gamma = 0.9)
