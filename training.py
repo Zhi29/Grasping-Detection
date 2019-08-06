@@ -135,9 +135,9 @@ def training():
                 #statistics
                 running_loss += loss.item() * images.size(0)
                 if DATA_SET == "Jacquard":
-                    running_acc += acc_cornell(pred, labels, images.size(0))
+                    running_acc += acc(pred, labels, images.size(0))
                     batch_loss = loss.item()
-                    batch_acc = acc_cornell(pred, labels, images.size(0))
+                    batch_acc = acc(pred, labels, images.size(0))
                 else:
                     running_acc += acc_cornell(pred, labels, images.size(0))
                     batch_loss = loss.item()
