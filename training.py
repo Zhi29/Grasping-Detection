@@ -56,6 +56,23 @@ def Loss_calculation(pred, label):
 
     return mse(pred, label)
 
+def Loss_cal(pred, label):
+    if DATA_SET == "Jacquard":
+        label = torch.reshape(label, (pred.size(0), NUM_LABELS * 5)) # x y theta h w
+    else:
+        label = torch.reshape(label, (pred.size(0), 24))
+    label = label.to(torch.float)
+
+    pred = pred.to(torch.float)
+
+    loss = 0
+    for i in range(0, NUM_LABELS * 5, 5):
+        loss += mse(pred, label(i:i+5))
+    return loss/NUM_LABELS
+
+    
+
+
 
 def training():
     #temporarily use ResNet18 as our model
@@ -89,10 +106,8 @@ def training():
             if phase == "train":
                 exp_lr_scheduler.step()
                 model.train() # Set model to training mode
-                model.dropout_rate = 0.0
             else:
                 model.eval() # Set model to evaluation mode
-                model.dropout_rate = 0
             
             running_loss = 0.0
             running_acc = 0
@@ -110,7 +125,8 @@ def training():
         
                     pred = model(images) # pred should have the same dim with labels
                     
-                    loss = Loss_calculation(pred, labels)
+                    #loss = Loss_calculation(pred, labels)
+                    loss = Loss_cal(pred, labels)
 
                     if phase == 'train':
                         loss.backward()

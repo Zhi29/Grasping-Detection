@@ -61,11 +61,14 @@ class MyDataset(torch.utils.data.Dataset):
                     box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
                 '''
                 box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
+                '''
+                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
                 box = ((box[0]*ratio, box[1]*ratio), (box[2]*ratio, box[3]*ratio), box[4])
                 bbox_contour = cv2.boxPoints(box)
                 bbox_contour.reshape((1,8))
-                
-                boxes.append(bbox_contour)
+                '''
+                #boxes.append(bbox_contour)
+                boxes.append(box)
         return boxes[:NUM_LABELS]
 
 class MyDataset_Cornell(torch.utils.data.Dataset):

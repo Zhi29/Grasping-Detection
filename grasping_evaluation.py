@@ -58,7 +58,7 @@ def acc(pred, label, num_imgs):
                 iou_per_image.append([iou, angle_diff])
         
         for k in range(len(iou_per_image)):
-            if iou_per_image[k][0] >= 0.05: #and iou_per_image[k][1] <= 30.0:
+            if iou_per_image[k][0] >= 0.05 and iou_per_image[k][1] <= 30.0:
                 count += 1
         
         accuracy += count/(label.size(1)**2)
