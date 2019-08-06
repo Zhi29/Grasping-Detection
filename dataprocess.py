@@ -52,7 +52,7 @@ class MyDataset(torch.utils.data.Dataset):
                 line = line.rstrip()
                 a = line.split(';')
 
-                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), np.sin(float(a[2])), np.cos(float(a[2]))]
+                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), np.sin(2 * float(a[2])), np.cos(2 * float(a[2]))]
                 '''
                 box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
                 box = ((box[0]*ratio, box[1]*ratio), (box[2]*ratio, box[3]*ratio), box[4])
