@@ -18,7 +18,7 @@ class myModel(nn.Module):
         self.dropout = nn.Dropout(p = dropout_rate)
         self.fc2 = nn.Linear(1024, 512)
         self.fc3 = nn.Linear(512, 256)
-        self.out = nn.Linear(256, 5)
+        self.out = nn.Linear(256, 6)
 
         self.dropout_rate = dropout_rate
     

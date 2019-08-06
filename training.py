@@ -71,6 +71,21 @@ def Loss_cal(pred, label):
     
     return loss/NUM_LABELS
 
+def Loss_cal_6(pred, label):
+    if DATA_SET == "Jacquard":
+        label = torch.reshape(label, (pred.size(0), NUM_LABELS * 6)) # x y theta h w
+    else:
+        label = torch.reshape(label, (pred.size(0), 24))
+    label = label.to(torch.float)
+
+    pred = pred.to(torch.float)
+
+    loss = 0
+    for i in range(0, NUM_LABELS * 6, 6):
+        loss += mse(pred, label[:,i:i+6])
+    
+    return loss/NUM_LABELS
+
     
 
 
@@ -131,7 +146,7 @@ def training():
                     pred = model(images) # pred should have the same dim with labels
                     
                     #loss = Loss_calculation(pred, labels)
-                    loss = Loss_cal(pred, labels)
+                    loss = Loss_cal_6(pred, labels)
 
                     if phase == 'train':
                         loss.backward()
@@ -140,9 +155,9 @@ def training():
                 #statistics
                 running_loss += loss.item() * images.size(0)
                 if DATA_SET == "Jacquard":
-                    running_acc += acc_output_5(pred, labels, images.size(0))
+                    running_acc += acc_output_6(pred, labels, images.size(0))
                     batch_loss = loss.item()
-                    batch_acc = acc_output_5(pred, labels, images.size(0))
+                    batch_acc = acc_output_6(pred, labels, images.size(0))
                 else:
                     running_acc += acc_cornell(pred, labels, images.size(0))
                     batch_loss = loss.item()

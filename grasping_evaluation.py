@@ -102,6 +102,43 @@ def acc_output_5(pred, label, num_imgs):
 
     return accuracy
 
+def acc_output_6(pred, label, num_imgs):
+    iou_per_image = []
+    accuracy = 0.0
+    count = 0
+
+    pred = torch.reshape(pred, (num_imgs, 6))
+
+    for i in range(num_imgs):
+        
+        theta = 0.5 * np.arctan(pred[i,4].detach().cpu().numpy()/pred[i,5].detach().cpu().numpy())
+
+        pred_bbox = ((pred[i,0].detach().cpu().numpy(), pred[i,1].detach().cpu().numpy()), \
+        (pred[i,2].detach().cpu().numpy(),pred[i,3].detach().cpu().numpy()),\
+        theta)
+
+        pred_bbox = cv2.boxPoints(pred_bbox)        
+        for k in range(label.size(1)):
+            theta_label = 0.5 * np.arctan(label[i,k,4].detach().cpu().numpy()/label[i,k,5].detach().cpu().numpy())
+            label_bbox = ((label[i,k,0].detach().cpu().numpy(), label[i,k,1].detach().cpu().numpy()), \
+                    (label[i,k,2].detach().cpu().numpy(),label[i,k,3].detach().cpu().numpy()),\
+                    theta_label)
+            label_bbox = cv2.boxPoints(label_bbox)
+
+            iou, angle_diff = calculate_IOU(pred_bbox, label_bbox, pred[i,-1].detach().cpu().numpy(), label[i,k,-1].detach().cpu().numpy())
+            iou_per_image.append([iou, angle_diff])  
+                 
+        for k in range(len(iou_per_image)):
+            if iou_per_image[k][0] >= 0.05 and iou_per_image[k][1] <= 30.0:
+                count += 1
+        
+        accuracy += count/(label.size(1)**2)
+
+        #renew lists and var
+        iou_per_image = []
+        count = 0
+
+    return accuracy  
 
 def acc_cornell(pred, label, num_imgs):
     iou_per_image = []

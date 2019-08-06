@@ -51,16 +51,8 @@ class MyDataset(torch.utils.data.Dataset):
             for line in f:
                 line = line.rstrip()
                 a = line.split(';')
-                '''
-                if float(a[2]) < 0:
-                    # x y w h theta
-                    box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), 360.0 + float(a[2])]
-                    
-                else:
-                    # x y h w theta
-                    box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
-                '''
-                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
+
+                box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), np.sin(float(a[2])), np.cos(float(a[2]))]
                 '''
                 box = [ratio * float(a[0]), ratio * float(a[1]), ratio * float(a[3]), ratio * float(a[4]), float(a[2])]
                 box = ((box[0]*ratio, box[1]*ratio), (box[2]*ratio, box[3]*ratio), box[4])
